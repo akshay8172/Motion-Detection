@@ -1,0 +1,51 @@
+Motion Detection and Video Creation Script
+
+Overview:
+This script uses OpenCV to detect motion in a live video feed from a camera. When motion is detected, the script saves images of the frames where motion occurs, and then creates a video from those images. Once the motion ceases, the saved images are deleted, and the final video is saved.
+
+How It Works:
+
+1. Imports and Setup:
+
+The script starts by importing necessary libraries: cv2 for computer vision, os for file operations, numpy for numerical operations, and datetime for handling date and time.
+It defines directories and filenames for saving images and the final video.
+
+2. Directory Creation:
+
+The SAVE_DIR directory is created if it doesn't already exist to store captured images.
+
+3. Camera Initialization:
+
+The script initializes the camera using cv2.VideoCapture(0) and captures the initial frame. This frame is used as a reference for detecting motion.
+
+4. Initial Frame Processing:
+
+The initial frame is converted to grayscale and blurred to prepare it for comparison with subsequent frames.
+
+5. Motion Detection:
+
+In the main loop, the script captures frames from the camera and processes each frame by converting it to grayscale and applying a blur.
+The difference between the current frame and the initial frame is calculated using cv2.absdiff. This difference is then thresholded to identify significant changes.
+A custom distance map function (distMap) computes the Pythagorean distance between the current frame and the initial frame to further analyze motion.
+The standard deviation of the blurred distance map is calculated to determine the presence of motion. If the standard deviation exceeds a threshold (20 in this case), motion is considered detected.
+
+6. Saving Images and Video:
+
+When motion is detected, the script saves the current frame as an image and appends the filename to the motion_images list.
+A video writer object is initialized if it hasn't been created yet. The detected frames are then written to the video file.
+
+7. Display and Exit:
+
+The script displays the current frame in a window.
+The script exits if the 'q' key is pressed.
+
+8. Finalization:
+
+The video writer object is released, finalizing the video file.
+The saved motion images are deleted after the video is created.
+A message indicating the completion of the process is printed.
+Motion Detection Conditions:
+
+Motion is detected based on the standard deviation of the difference between the initial frame and the current frame. If the standard deviation exceeds 20, motion is considered detected, and the current frame is saved as an image and added to the video.
+Conclusion:
+The script effectively captures and processes video frames to detect and record motion. It creates a video from the frames where motion is detected and cleans up temporary images once the process is complete.
